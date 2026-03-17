@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VM Group × Victoria Teams — Propuesta Estratégica</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+  :root {
+    --ink: #0A0A0A;
+    --paper: #F8F5EF;
+    --warm-white: #FFFCF7;
+    --gold: #B8944A;
+    --gold-soft: #D4B47A;
+    --gold-pale: #EDD9A8;
+    --navy: #1C2E45;
+    --navy-mid: #2E4A6A;
+    --sage: #3A5440;
+    --rust: #7A2E1A;
+    --muted: #7C766E;
+    --rule: rgba(10,10,10,0.1);
+    --rule-soft: rgba(10,10,10,0.06);
+  }
+
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--paper);
+    color: var(--ink);
+    line-height: 1.7;
+    font-size: 15px;
+  }
+
+  /* ══════════════════════════════
+     COVER PAGE
+  ══════════════════════════════ */
+  .cover {
+    min-height: 100vh;
+    background: var(--ink);
+    display: grid;
+    grid-template-rows: 1fr auto;
+    padding: 72px 80px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cover::after {
+    content: '';
+    position: absolute;
+    right: -80px;
+    top: -80px;
+    width: 600px;
+    height: 600px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(184,148,74,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cover::before {
+    content: '';
+    position: absolute;
+    left: -120px;
+    bottom: -120px;
+    width: 500px;
+    height: 500px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(28,46,69,0.5) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cover-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    z-index: 2;
+  }
+
+  .brand-lockup { display: flex; flex-direction: column; gap: 6px; }
+
+  .brand-from {
+    font-size: 10px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .brand-to {
+    font-size: 10px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: rgba(248,245,239,0.35);
+  }
+
+  .cover-meta {
+    text-align: right;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: rgba(248,245,239,0.3);
+    line-height: 1.8;
+  }
+
+  .cover-main {
+    position: relative;
+    z-index: 2;
+    padding-top: 80px;
+  }
+
+  .cover-kicker {
+    font-size: 10px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .cover-kicker::before {
+    content: '';
+    width: 40px;
+    height: 1px;
+    background: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .cover-h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(56px, 9vw, 108px);
+    font-weight: 300;
+    line-height: 0.95;
+    color: var(--paper);
+    margin-bottom: 48px;
+  }
+
+  .cover-h1 em {
+    font-style: italic;
+    color: var(--gold);
+    display: block;
+  }
+
+  .cover-proposition {
+    max-width: 520px;
+    font-size: 16px;
+    color: rgba(248,245,239,0.5);
+    line-height: 1.9;
+    border-left: 1px solid rgba(184,148,74,0.3);
+    padding-left: 24px;
+    margin-bottom: 80px;
+  }
+
+  .cover-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    position: relative;
+    z-index: 2;
+    padding-top: 40px;
+    border-top: 1px solid rgba(248,245,239,0.08);
+  }
+
+  .cover-footer-left {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: rgba(248,245,239,0.35);
+  }
+
+  .cover-footer-right {
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(248,245,239,0.2);
+  }
+
+  /* ══════════════════════════════
+     NAV
+  ══════════════════════════════ */
+  .subnav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(248,245,239,0.95);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--rule);
+    padding: 0 80px;
+    display: flex;
+    align-items: center;
+    height: 52px;
+    gap: 0;
+  }
+
+  .subnav-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    color: var(--ink);
+    text-decoration: none;
+    margin-right: auto;
+  }
+
+  .subnav a:not(.subnav-brand) {
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    border-left: 1px solid var(--rule);
+    transition: color 0.2s;
+  }
+
+  .subnav a:not(.subnav-brand):hover { color: var(--ink); }
+
+  /* ══════════════════════════════
+     SHARED SECTION STYLES
+  ══════════════════════════════ */
+  .section-wrap {
+    max-width: 1160px;
+    margin: 0 auto;
+    padding: 96px 80px;
+  }
+
+  .section-wrap.tight { padding-top: 72px; padding-bottom: 72px; }
+
+  .divider { border: none; border-top: 1px solid var(--rule); margin: 0 80px; }
+
+  .section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 10px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+  }
+
+  .section-label::after {
+    content: '';
+    width: 32px;
+    height: 1px;
+    background: var(--gold-pale);
+  }
+
+  .section-h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(38px, 5vw, 60px);
+    font-weight: 300;
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+
+  .section-h2 em { font-style: italic; color: var(--navy); }
+
+  .section-lead {
+    font-size: 16px;
+    color: var(--muted);
+    max-width: 600px;
+    line-height: 1.85;
+    margin-bottom: 56px;
+  }
+
+  /* ══════════════════════════════
+     01 — THE OPPORTUNITY
+  ══════════════════════════════ */
+  .opportunity-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    margin-bottom: 48px;
+  }
+
+  .opp-card {
+    background: var(--warm-white);
+    padding: 40px 32px;
+    transition: background 0.25s;
+  }
+
+  .opp-card:hover { background: var(--ink); }
+  .opp-card:hover .opp-n { color: rgba(184,148,74,0.3); }
+  .opp-card:hover .opp-title { color: var(--paper); }
+  .opp-card:hover .opp-body { color: rgba(248,245,239,0.5); }
+
+  .opp-n {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 72px;
+    font-weight: 300;
+    color: var(--gold-pale);
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+
+  .opp-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .opp-body {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.75;
+  }
+
+  /* ══════════════════════════════
+     02 — VANESSA AS THE STAR
+  ══════════════════════════════ */
+  .star-section {
+    background: var(--navy);
+    padding: 96px 80px;
+  }
+
+  .star-inner {
+    max-width: 1160px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .star-label {
+    font-size: 10px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+  }
+
+  .star-h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(36px, 4vw, 52px);
+    font-weight: 300;
+    line-height: 1.1;
+    color: var(--paper);
+    margin-bottom: 24px;
+  }
+
+  .star-h2 em { font-style: italic; color: var(--gold); }
+
+  .star-body {
+    font-size: 15px;
+    color: rgba(248,245,239,0.55);
+    line-height: 1.85;
+    margin-bottom: 40px;
+  }
+
+  .star-insight {
+    border-left: 2px solid var(--gold);
+    padding: 16px 20px;
+    background: rgba(184,148,74,0.08);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    font-style: italic;
+    color: rgba(248,245,239,0.75);
+    line-height: 1.5;
+  }
+
+  .star-formats {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .sf-card {
+    background: rgba(255,252,247,0.04);
+    border: 1px solid rgba(184,148,74,0.2);
+    padding: 24px 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+    transition: background 0.2s, border-color 0.2s;
+  }
+
+  .sf-card:hover {
+    background: rgba(184,148,74,0.1);
+    border-color: rgba(184,148,74,0.4);
+  }
+
+  .sf-icon {
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(184,148,74,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--gold);
+    flex-shrink: 0;
+  }
+
+  .sf-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    color: var(--paper);
+    margin-bottom: 4px;
+  }
+
+  .sf-desc {
+    font-size: 12px;
+    color: rgba(248,245,239,0.45);
+    line-height: 1.65;
+  }
+
+  /* ══════════════════════════════
+     03 — CONTENT PILLARS
+  ══════════════════════════════ */
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .pillar {
+    background: var(--warm-white);
+    padding: 36px 28px;
+    transition: all 0.3s;
+    cursor: default;
+  }
+
+  .pillar:hover { background: var(--ink); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.2); }
+  .pillar:hover .p-n { color: rgba(184,148,74,0.25); }
+  .pillar:hover .p-name { color: var(--paper); }
+  .pillar:hover .p-pct-tag { background: rgba(184,148,74,0.15); color: var(--gold); }
+  .pillar:hover .p-desc { color: rgba(248,245,239,0.5); }
+  .pillar:hover .p-tag { background: rgba(255,252,247,0.07); color: rgba(248,245,239,0.5); }
+
+  .p-n {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 60px;
+    font-weight: 300;
+    color: var(--gold-pale);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .p-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    font-weight: 400;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .p-pct-tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    padding: 4px 10px;
+    background: rgba(184,148,74,0.12);
+    color: #8B6914;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  .p-desc {
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.75;
+    margin-bottom: 20px;
+  }
+
+  .p-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+
+  .p-tag {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    background: rgba(10,10,10,0.05);
+    color: var(--muted);
+  }
+
+  /* ══════════════════════════════
+     04 — WEEKLY CALENDAR
+  ══════════════════════════════ */
+  .week-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .wday {
+    background: var(--warm-white);
+    padding: 28px 22px;
+    min-height: 240px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .wday.v1 { background: var(--navy); }
+  .wday.v2 { background: #1A2C1A; }
+  .wday.v3 { background: #2C1810; }
+
+  .wd-name {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+
+  .wday.v1 .wd-name,
+  .wday.v2 .wd-name,
+  .wday.v3 .wd-name { color: rgba(248,245,239,0.35); }
+
+  .wd-series {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 12px;
+  }
+
+  .wday.v1 .wd-series { color: var(--gold); }
+  .wday.v2 .wd-series { color: #A8C8A0; }
+  .wday.v3 .wd-series { color: #D4A090; }
+
+  .wd-format {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    margin-bottom: 14px;
+  }
+
+  .wday:not(.v1):not(.v2):not(.v3) .wd-format {
+    background: rgba(10,10,10,0.07);
+    color: var(--muted);
+  }
+
+  .wday.v1 .wd-format { background: rgba(184,148,74,0.2); color: var(--gold); }
+  .wday.v2 .wd-format { background: rgba(100,160,100,0.15); color: #7AB87A; }
+  .wday.v3 .wd-format { background: rgba(160,80,60,0.15); color: #C07060; }
+
+  .wd-copy {
+    font-size: 12px;
+    line-height: 1.65;
+    margin-top: auto;
+    font-style: italic;
+  }
+
+  .wday:not(.v1):not(.v2):not(.v3) .wd-copy { color: var(--muted); }
+  .wday.v1 .wd-copy,
+  .wday.v2 .wd-copy,
+  .wday.v3 .wd-copy { color: rgba(248,245,239,0.45); }
+
+  /* ══════════════════════════════
+     05 — WEB IMPROVEMENTS
+  ══════════════════════════════ */
+  .web-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .web-card {
+    background: var(--warm-white);
+    padding: 36px 32px;
+    position: relative;
+  }
+
+  .web-card.priority::before {
+    content: 'Prioridad alta';
+    position: absolute;
+    top: 0;
+    right: 24px;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    background: var(--rust);
+    color: var(--paper);
+  }
+
+  .web-card.quick::before {
+    content: 'Quick win';
+    position: absolute;
+    top: 0;
+    right: 24px;
+    font-size: 9px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    background: var(--sage);
+    color: var(--paper);
+  }
+
+  .wc-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .wc-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px;
+    margin-bottom: 10px;
+  }
+
+  .wc-current {
+    font-size: 12px;
+    color: var(--rust);
+    background: rgba(122,46,26,0.07);
+    padding: 8px 12px;
+    margin-bottom: 10px;
+    line-height: 1.6;
+  }
+
+  .wc-current strong { font-weight: 500; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+  .wc-proposed {
+    font-size: 12px;
+    color: var(--sage);
+    background: rgba(58,84,64,0.07);
+    padding: 8px 12px;
+    line-height: 1.6;
+  }
+
+  .wc-proposed strong { font-weight: 500; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; display: block; margin-bottom: 4px; }
+
+  /* ══════════════════════════════
+     06 — CHARTS
+  ══════════════════════════════ */
+  .charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+  }
+
+  .chart-card {
+    border: 1px solid var(--rule);
+    background: var(--warm-white);
+    padding: 32px;
+  }
+
+  .chart-h {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    margin-bottom: 4px;
+  }
+
+  .chart-sub {
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+  }
+
+  .chart-wrap { position: relative; height: 220px; }
+
+  /* ══════════════════════════════
+     07 — SCOPE / DELIVERABLES
+  ══════════════════════════════ */
+  .deliverables {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .dlv {
+    background: var(--warm-white);
+    padding: 32px 28px;
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+  }
+
+  .dlv-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 36px;
+    font-weight: 300;
+    color: var(--gold-pale);
+    line-height: 1;
+    flex-shrink: 0;
+    width: 40px;
+  }
+
+  .dlv-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px;
+    margin-bottom: 6px;
+  }
+
+  .dlv-freq {
+    display: inline-block;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    background: rgba(184,148,74,0.12);
+    color: #8B6914;
+    margin-bottom: 10px;
+  }
+
+  .dlv-desc {
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ══════════════════════════════
+     08 — INVESTMENT
+  ══════════════════════════════ */
+  .invest-wrap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+  }
+
+  .invest-main {
+    background: var(--ink);
+    padding: 56px 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .invest-main::before {
+    content: '';
+    position: absolute;
+    right: -60px;
+    top: -60px;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(184,148,74,0.12) 0%, transparent 70%);
+  }
+
+  .invest-label {
+    font-size: 10px;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .invest-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 88px;
+    font-weight: 300;
+    line-height: 1;
+    color: var(--paper);
+    position: relative;
+    z-index: 2;
+    margin-bottom: 6px;
+  }
+
+  .invest-price sup {
+    font-size: 28px;
+    vertical-align: top;
+    margin-top: 16px;
+    color: var(--gold);
+  }
+
+  .invest-period {
+    font-size: 12px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(248,245,239,0.35);
+    margin-bottom: 40px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .invest-note {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-style: italic;
+    color: rgba(248,245,239,0.5);
+    border-top: 1px solid rgba(248,245,239,0.1);
+    padding-top: 28px;
+    line-height: 1.6;
+    position: relative;
+    z-index: 2;
+  }
+
+  .invest-side {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .invest-item {
+    border: 1px solid var(--rule);
+    background: var(--warm-white);
+    padding: 24px 24px 24px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+
+  .invest-check {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--gold-pale);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--gold);
+    font-size: 14px;
+    margin-top: 2px;
+  }
+
+  .invest-item-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+
+  .invest-item-desc {
+    font-size: 12px;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+
+  /* ══════════════════════════════
+     09 — NEXT STEPS
+  ══════════════════════════════ */
+  .steps-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+  }
+
+  .step {
+    background: var(--warm-white);
+    padding: 36px 26px;
+  }
+
+  .step:nth-child(1) { background: var(--navy); }
+  .step:nth-child(1) .step-n { color: rgba(184,148,74,0.3); }
+  .step:nth-child(1) .step-title { color: var(--paper); }
+  .step:nth-child(1) .step-desc { color: rgba(248,245,239,0.45); }
+
+  .step-n {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px;
+    font-weight: 300;
+    color: var(--gold-pale);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 19px;
+    margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .step-desc {
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+
+  /* ══════════════════════════════
+     CLOSER
+  ══════════════════════════════ */
+  .closer {
+    background: var(--ink);
+    padding: 120px 80px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .closer::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 70% 70% at 50% 50%, rgba(184,148,74,0.1) 0%, transparent 65%);
+  }
+
+  .closer-kicker {
+    font-size: 10px;
+    letter-spacing: 0.5em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 28px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .closer-h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(44px, 7vw, 88px);
+    font-weight: 300;
+    line-height: 1.05;
+    color: var(--paper);
+    margin-bottom: 36px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .closer-h2 em { font-style: italic; color: var(--gold); }
+
+  .closer-sub {
+    font-size: 15px;
+    color: rgba(248,245,239,0.4);
+    max-width: 480px;
+    margin: 0 auto 72px;
+    line-height: 1.9;
+    position: relative;
+    z-index: 2;
+  }
+
+  .closer-meta {
+    display: flex;
+    justify-content: center;
+    gap: 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  .cm-label {
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+
+  .cm-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 17px;
+    color: rgba(248,245,239,0.6);
+  }
+
+  /* ══════════════════════════════
+     ANIMATIONS
+  ══════════════════════════════ */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .ao { animation: fadeUp 0.65s ease both; }
+  .d1 { animation-delay: 0.05s; }
+  .d2 { animation-delay: 0.15s; }
+  .d3 { animation-delay: 0.3s; }
+  .d4 { animation-delay: 0.45s; }
+  .d5 { animation-delay: 0.6s; }
+</style>
+</head>
+<body>
+
+<!-- ═══════════ COVER ═══════════ -->
+<div class="cover">
+  <div class="cover-top">
+    <div class="brand-lockup">
+      <span class="brand-from">Victoria Teams</span>
+      <span class="brand-to">Para VM Group USA</span>
+    </div>
+    <div class="cover-meta">
+      Propuesta Estratégica<br>
+      Marzo 2026<br>
+      Confidencial
+    </div>
+  </div>
+
+  <div class="cover-main">
+    <div class="cover-kicker ao d1">Contenido · Presencia Digital · Web</div>
+    <h1 class="cover-h1 ao d2">
+      Vanessa,<br>
+      <em>ya tienes el expertise.</em><br>
+      Démosle<br>audiencia.
+    </h1>
+    <p class="cover-proposition ao d3">
+      VM Group tiene el conocimiento, la credibilidad, el equipo y el rebranding. 
+      Lo que proponemos es convertir todo eso en un sistema digital que trabaje 
+      para ustedes todos los días — sin que Vanessa tenga que hacerlo sola.
+    </p>
+
+    <div class="cover-footer ao d4">
+      <span class="cover-footer-left">Tailor Made Solutions</span>
+      <span class="cover-footer-right">vmgroup-usa.com · @vmgroup_usa</span>
+    </div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav class="subnav">
+  <a href="#" class="subnav-brand">VT × VM Group</a>
+  <a href="#oportunidad">Oportunidad</a>
+  <a href="#sistema">Sistema</a>
+  <a href="#web">Web</a>
+  <a href="#inversion">Inversión</a>
+</nav>
+
+<!-- ═══════════ 01. OPORTUNIDAD ═══════════ -->
+<section id="oportunidad">
+  <div class="section-wrap">
+    <span class="section-label">01 — La oportunidad</span>
+    <h2 class="section-h2">Lo que vemos<br><em>en el canal hoy.</em></h2>
+    <p class="section-lead">
+      Un análisis honesto de tres activos que VM Group tiene y que aún no están 
+      trabajando a su máximo potencial.
+    </p>
+
+    <div class="opportunity-grid">
+      <div class="opp-card">
+        <div class="opp-n">01</div>
+        <div class="opp-title">La vocera que no tiene formato propio</div>
+        <p class="opp-body">Vanessa aparece en lives y clips de webinar, pero no existe una sección regular donde su voz y criterio sean el centro. En servicios legales para latinos, la confianza se construye con cara y conocimiento — no con gráficas. El activo más valioso de VM Group está subutilizado.</p>
+      </div>
+      <div class="opp-card">
+        <div class="opp-n">02</div>
+        <div class="opp-title">Contenido que vende antes de generar deseo</div>
+        <p class="opp-body">La mayoría de los posts cierran con "agenda tu consulta" sin haber construido suficiente confianza primero. El 43% de las personas que dejan de seguir cuentas profesionales lo hacen por exceso de contenido de venta. El funnel necesita más valor antes de conversión.</p>
+      </div>
+      <div class="opp-card">
+        <div class="opp-n">03</div>
+        <div class="opp-title">Un sitio web funcional que puede ser mucho más</div>
+        <p class="opp-body">La web actual cumple su función, pero hay oportunidades concretas de mejorar la conversión, la jerarquía visual y la experiencia del usuario — especialmente en mobile. Con ajustes puntuales (no un rediseño completo), puede trabajar mejor para el negocio.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════ 02. VANESSA AS THE STAR ═══════════ -->
+<div class="star-section" id="sistema">
+  <div class="star-inner">
+    <div>
+      <div class="star-label">02 — El activo central</div>
+      <h2 class="star-h2">Vanessa<br><em>es la marca.</em></h2>
+      <p class="star-body">
+        Abogada, candidata a LLM, fundadora de un ecosistema de cinco líneas de servicio en 
+        cuatro ciudades. Ese perfil no es común. Y la audiencia latina que VM Group quiere 
+        capturar — profesionales, inversionistas, familias que buscan migrar — necesita ver 
+        esa persona, escuchar su criterio y decidir si confía.<br><br>
+        El sistema que proponemos construye contenido alrededor de su voz. Ella graba, 
+        explica, desmitifica. Nosotros estructuramos, guionizamos y distribuimos.
+      </p>
+      <div class="star-insight">
+        "La persona que resuelve tu caso de migración debería ser la misma persona que te enseñó cómo funciona el proceso. Eso es VM Group."
+      </div>
+    </div>
+    <div class="star-formats">
+      <div class="sf-card">
+        <div class="sf-icon">L</div>
+        <div>
+          <div class="sf-title">"El Lunes Migratorio"</div>
+          <p class="sf-desc">Reel semanal de 60 seg. Vanessa a cámara. Un dato, un cambio, una verdad sobre inmigración en USA. Sin producción costosa — criterio y cámara del teléfono.</p>
+        </div>
+      </div>
+      <div class="sf-card">
+        <div class="sf-icon">M</div>
+        <div>
+          <div class="sf-title">"Mito o Verdad"</div>
+          <p class="sf-desc">Carrusel semanal de 6 slides. Desmitificaciones directas. El contenido que genera más shares y saves en el nicho migratorio porque todos conocen a alguien que cree el mito.</p>
+        </div>
+      </div>
+      <div class="sf-card">
+        <div class="sf-icon">C</div>
+        <div>
+          <div class="sf-title">"Caso de la semana"</div>
+          <p class="sf-desc">Carrusel narrativo. Un proceso real, anonimizado, contado como historia. El formato que más confianza genera antes de una consulta. Muestra proceso, no solo resultado.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════ 03. PILARES ═══════════ -->
+<section>
+  <div class="section-wrap">
+    <span class="section-label">03 — Sistema editorial</span>
+    <h2 class="section-h2">Seis pilares,<br><em>un ecosistema.</em></h2>
+    <p class="section-lead">
+      No posts sueltos. Un sistema con lógica clara: 70% valor, 20% comunidad, 10% conversión. 
+      Cada pilar cumple un rol específico en el camino de la audiencia hacia la consulta.
+    </p>
+
+    <div class="pillars-grid">
+      <div class="pillar">
+        <div class="p-n">01</div>
+        <div class="p-name">Educación Migratoria</div>
+        <span class="p-pct-tag">35% del contenido</span>
+        <p class="p-desc">Lo que nadie explica bien sobre visas, USCIS, residencia. Información que antes solo quienes pagaban consulta tenían acceso. Posiciona a VM Group como fuente.</p>
+        <div class="p-tags"><span class="p-tag">Carrusel</span><span class="p-tag">Reel</span><span class="p-tag">Lives</span></div>
+      </div>
+      <div class="pillar">
+        <div class="p-n">02</div>
+        <div class="p-name">Verdad vs. Mito</div>
+        <span class="p-pct-tag">20% del contenido</span>
+        <p class="p-desc">Vanessa desmitifica creencias falsas que circulan en la comunidad latina sobre migración, inversión y negocios en USA. Alto share y save orgánico.</p>
+        <div class="p-tags"><span class="p-tag">Reel frontal</span><span class="p-tag">Encuesta Stories</span></div>
+      </div>
+      <div class="pillar">
+        <div class="p-n">03</div>
+        <div class="p-name">Casos Reales</div>
+        <span class="p-pct-tag">20% del contenido</span>
+        <p class="p-desc">Historias anonimizadas de procesos resueltos. El contenido que más confianza genera porque muestra el trabajo real, no solo la promesa del servicio.</p>
+        <div class="p-tags"><span class="p-tag">Carrusel narrativo</span><span class="p-tag">Reel testimonial</span></div>
+      </div>
+      <div class="pillar">
+        <div class="p-n">04</div>
+        <div class="p-name">El Negocio en USA</div>
+        <span class="p-pct-tag">10% del contenido</span>
+        <p class="p-desc">Para el segmento Business 360. LLC, estructura corporativa, real estate como respaldo migratorio. Activa la audiencia de emprendedores e inversionistas latinos.</p>
+        <div class="p-tags"><span class="p-tag">Carrusel</span><span class="p-tag">Colaboraciones</span></div>
+      </div>
+      <div class="pillar">
+        <div class="p-n">05</div>
+        <div class="p-name">Contexto Actual</div>
+        <span class="p-pct-tag">10% del contenido</span>
+        <p class="p-desc">Noticias migratorias interpretadas con criterio legal. VM Group como fuente confiable en un momento de mucha confusión y desinformación sobre inmigración USA.</p>
+        <div class="p-tags"><span class="p-tag">Reel de opinión</span><span class="p-tag">Carrusel datos</span></div>
+      </div>
+      <div class="pillar">
+        <div class="p-n">06</div>
+        <div class="p-name">VM por Dentro</div>
+        <span class="p-pct-tag">5% del contenido</span>
+        <p class="p-desc">Equipo, oficina, cultura, logros. El contenido que humaniza la marca y reduce la barrera de contacto. Especialmente relevante después del rebranding reciente.</p>
+        <div class="p-tags"><span class="p-tag">Stories</span><span class="p-tag">Carrusel equipo</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════ 04. CALENDARIO ═══════════ -->
+<section>
+  <div class="section-wrap">
+    <span class="section-label">04 — Secciones semanales</span>
+    <h2 class="section-h2">Cada semana,<br><em>un ritmo.</em></h2>
+    <p class="section-lead">
+      La audiencia fideliza cuando sabe qué esperar. Tres secciones fijas + Stories diarias. 
+      Las secciones estrella las graba Vanessa — nosotros entregamos el guión listo.
+    </p>
+
+    <div class="week-grid">
+      <div class="wday v1">
+        <div class="wd-name">Lunes</div>
+        <div class="wd-series">"El Lunes Migratorio"</div>
+        <span class="wd-format">Reel 60 seg</span>
+        <p class="wd-copy">"Esta semana USCIS cambió esto. Lo que necesitas saber en 60 segundos."</p>
+      </div>
+      <div class="wday">
+        <div class="wd-name">Martes</div>
+        <div class="wd-series">Stories de comunidad</div>
+        <span class="wd-format">Stories</span>
+        <p class="wd-copy">Encuestas, preguntas, repost. Sin producción. Vanessa graba desde donde esté.</p>
+      </div>
+      <div class="wday v2">
+        <div class="wd-name">Miércoles</div>
+        <div class="wd-series">"Mito o Verdad"</div>
+        <span class="wd-format">Carrusel 6 slides</span>
+        <p class="wd-copy">"Mito: invertir en una propiedad te da la green card. La verdad que nadie dice."</p>
+      </div>
+      <div class="wday">
+        <div class="wd-name">Jueves</div>
+        <div class="wd-series">Detrás del proceso</div>
+        <span class="wd-format">Stories / Reel corto</span>
+        <p class="wd-copy">Hoy en el escritorio. Un documento, un caso, un momento real. Humaniza el trabajo.</p>
+      </div>
+      <div class="wday v3">
+        <div class="wd-name">Viernes</div>
+        <div class="wd-series">"Caso de la semana"</div>
+        <span class="wd-format">Carrusel narrativo</span>
+        <p class="wd-copy">"Esta semana cerramos un EB2-NIW para una médica colombiana. Así fue el proceso."</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════ 05. WEB ═══════════ -->
+<section id="web">
+  <div class="section-wrap">
+    <span class="section-label">05 — Mejoras Web</span>
+    <h2 class="section-h2">El sitio funciona.<br><em>Puede convertir más.</em></h2>
+    <p class="section-lead">
+      vmgroup-usa.com fue construida con criterio y tiene buena base en Elementor. 
+      No proponemos un rediseño — proponemos mejoras puntuales de alto impacto 
+      que mejoran la conversión sin romper lo que ya funciona.
+    </p>
+
+    <div class="web-grid">
+      <div class="web-card priority">
+        <span class="wc-icon">📱</span>
+        <div class="wc-title">Experiencia Mobile</div>
+        <div class="wc-current">
+          <strong>Hoy</strong>
+          Algunos módulos rompen en mobile. La navegación entre las sub-marcas (Inmigración, Business 360, Inversiones) no es clara en pantallas pequeñas. La audiencia latina en USA consume principalmente desde teléfono.
+        </div>
+        <div class="wc-proposed">
+          <strong>Propuesta</strong>
+          Auditoría mobile completa + ajustes CSS en Elementor. Menú simplificado para mobile. Cards de servicios apiladas correctamente. Sin tocar el diseño desktop.
+        </div>
+      </div>
+      <div class="web-card priority">
+        <span class="wc-icon">🎯</span>
+        <div class="wc-title">Hero con propuesta de valor clara</div>
+        <div class="wc-current">
+          <strong>Hoy</strong>
+          El hero dice "Profesionales dedicados a impulsar tu crecimiento empresarial y profesional en Estados Unidos" — es genérico y no diferencia entre los tres públicos (migrantes, empresarios, inversionistas).
+        </div>
+        <div class="wc-proposed">
+          <strong>Propuesta</strong>
+          Hero dinámico que segmente: ¿Quieres migrar? ¿Quieres invertir? ¿Quieres expandir tu negocio? Cada path lleva a su servicio específico. Copy nuevo + ajuste visual en Elementor.
+        </div>
+      </div>
+      <div class="web-card quick">
+        <span class="wc-icon">⭐</span>
+        <div class="wc-title">Testimonios con cara y nombre</div>
+        <div class="wc-current">
+          <strong>Hoy</strong>
+          Los testimonios son texto plano sin foto, sin país de origen, sin el tipo de caso. Tienen buenas palabras pero baja credibilidad visual. Solo aparecen en homepage y página de equipo.
+        </div>
+        <div class="wc-proposed">
+          <strong>Propuesta</strong>
+          Sección de testimonios rediseñada: foto o avatar, nombre, país de origen, tipo de caso resuelto. Agregar 2–3 videos de testimonio (los mismos clientes que ya tienen en IG). Subir a testimonios página propia.
+        </div>
+      </div>
+      <div class="web-card quick">
+        <span class="wc-icon">🔗</span>
+        <div class="wc-title">CTAs coherentes con el funnel de contenido</div>
+        <div class="wc-current">
+          <strong>Hoy</strong>
+          Todos los CTAs van a WhatsApp directo. Es una fricción alta para alguien que llegó de Instagram y aún está en fase de consideración. No hay forma de capturar el lead antes de que esté listo para consultar.
+        </div>
+        <div class="wc-proposed">
+          <strong>Propuesta</strong>
+          Agregar un CTA intermedio: "Descarga la guía gratuita" o "Evalúa tu elegibilidad" (VM Analyzer ya existe). Ruta: IG → Web → Lead magnet → WhatsApp cuando está listo. Mejora la calidad del lead.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════ 06. BENCHMARKS ═══════════ -->
+<section>
+  <div class="section-wrap">
+    <span class="section-label">06 — Benchmarks</span>
+    <h2 class="section-h2">Metas basadas<br><em>en data real.</em></h2>
+    <p class="section-lead">
+      Referencia de industria para contexto. Las metas del primer trimestre 
+      son conservadoras — se ajustan con los analytics reales de la cuenta una vez iniciemos.
+    </p>
+
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-h">Mix ideal de formatos 2026</div>
+        <div class="chart-sub">Actual vs. recomendado — Instagram</div>
+        <div class="chart-wrap"><canvas id="mixChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-h">Engagement rate por sector</div>
+        <div class="chart-sub">Cuentas 5K–50K · benchmark legal/profesional</div>
+        <div class="chart-wrap"><canvas id="engChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-h">Proyección de crecimiento</div>
+        <div class="chart-sub">Con estrategia activa vs. sin estrategia</div>
+        <div class="chart-wrap"><canvas id="growthChart"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-h">Distribución de pilares</div>
+        <div class="chart-sub">Lógica 70/20/10 por categoría de contenido</div>
+        <div class="chart-wrap"><canvas id="pillarChart"></canvas></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════ 07. DELIVERABLES ═══════════ -->
+<section>
+  <div class="section-wrap">
+    <span class="section-label">07 — Lo que entregamos</span>
+    <h2 class="section-h2">Un sistema,<br><em>no posts sueltos.</em></h2>
+    <p class="section-lead">
+      Todo lo que Vanessa y su equipo necesitan para ejecutar con criterio, 
+      sin depender de improvisación ni de estar pendiente de qué publicar mañana.
+    </p>
+
+    <div class="deliverables">
+      <div class="dlv">
+        <div class="dlv-num">01</div>
+        <div>
+          <div class="dlv-title">Estrategia Editorial Mensual</div>
+          <span class="dlv-freq">1 entrega / mes</span>
+          <p class="dlv-desc">Calendario completo del mes, pilares activos, temas por semana, lógica de funnel y dirección de contenido. VM Group sabe exactamente qué publicar cada día — sin adivinar.</p>
+        </div>
+      </div>
+      <div class="dlv">
+        <div class="dlv-num">02</div>
+        <div>
+          <div class="dlv-title">Copies A y B por Post</div>
+          <span class="dlv-freq">~20 posts / mes</span>
+          <p class="dlv-desc">Todos los posts del calendario con dos versiones de copy para aprobación. Hook, cuerpo, CTA y hashtags optimizados. VM Group elige y aprueba — nosotros redactamos.</p>
+        </div>
+      </div>
+      <div class="dlv">
+        <div class="dlv-num">03</div>
+        <div>
+          <div class="dlv-title">Guiones para Reels de Vanessa</div>
+          <span class="dlv-freq">4 guiones / mes</span>
+          <p class="dlv-desc">Guión listo para grabar. Vanessa solo ejecuta — sin improvisar. Hook en 2 seg, desarrollo, cierre, CTA. Formato para 60–90 segundos. Máxima naturalidad mínimo tiempo de grabación.</p>
+        </div>
+      </div>
+      <div class="dlv">
+        <div class="dlv-num">04</div>
+        <div>
+          <div class="dlv-title">Brief Visual por Pieza</div>
+          <span class="dlv-freq">Por pieza del calendario</span>
+          <p class="dlv-desc">Para cada pieza: paleta, composición, tipografía, referencias visuales. El equipo de diseño de VM Group (o Katherine de Marketing) tiene instrucciones claras para producir sin idas y vueltas.</p>
+        </div>
+      </div>
+      <div class="dlv">
+        <div class="dlv-num">05</div>
+        <div>
+          <div class="dlv-title">Mejoras Web Prioritarias</div>
+          <span class="dlv-freq">Primeros 30 días</span>
+          <p class="dlv-desc">Las 4 mejoras identificadas en el sitio: experiencia mobile, hero con segmentación de audiencia, testimonios con cara, y CTAs coherentes con el funnel. Trabajo directo en Elementor.</p>
+        </div>
+      </div>
+      <div class="dlv">
+        <div class="dlv-num">06</div>
+        <div>
+          <div class="dlv-title">Reporte Mensual de KPIs</div>
+          <span class="dlv-freq">1 entrega / mes</span>
+          <p class="dlv-desc">Dashboard simple con los indicadores que importan: alcance, engagement rate, saves, shares, crecimiento de seguidores, tráfico web desde redes. Decisiones basadas en datos reales, no intuición.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════ 08. INVERSIÓN ═══════════ -->
+<section id="inversion">
+  <div class="section-wrap">
+    <span class="section-label">08 — Inversión</span>
+    <h2 class="section-h2">Un fee,<br><em>todo incluido.</em></h2>
+    <p class="section-lead">
+      Sin sorpresas ni adicionales. Todo lo que está en esta propuesta entra en un 
+      retainer mensual fijo diseñado para que VM Group pueda planificar su inversión en marketing.
+    </p>
+
+    <div class="invest-wrap">
+      <div class="invest-main">
+        <div class="invest-label">Retainer mensual</div>
+        <div class="invest-price"><sup>USD</sup>1,500</div>
+        <div class="invest-period">Por mes · Contrato mensual renovable</div>
+        <div class="invest-note">
+          Primer mes de prueba disponible. Si en 30 días el sistema no está funcionando para VM Group, no continuamos. Sin compromisos de largo plazo hasta que los resultados lo justifiquen.
+        </div>
+      </div>
+
+      <div class="invest-side">
+        <div class="invest-item">
+          <div class="invest-check">✓</div>
+          <div>
+            <div class="invest-item-title">Estrategia editorial + calendario</div>
+            <p class="invest-item-desc">Plan mensual completo con lógica estratégica por pilar y semana.</p>
+          </div>
+        </div>
+        <div class="invest-item">
+          <div class="invest-check">✓</div>
+          <div>
+            <div class="invest-item-title">Copies A/B (~20 posts/mes)</div>
+            <p class="invest-item-desc">Redacción completa: hook, cuerpo, CTA, hashtags. Dos versiones para aprobación.</p>
+          </div>
+        </div>
+        <div class="invest-item">
+          <div class="invest-check">✓</div>
+          <div>
+            <div class="invest-item-title">4 guiones para Reels de Vanessa</div>
+            <p class="invest-item-desc">Listo para grabar. Sin improvisar. Las secciones fijas semanales cubiertas.</p>
+          </div>
+        </div>
+        <div class="invest-item">
+          <div class="invest-check">✓</div>
+          <div>
+            <div class="invest-item-title">Mejoras web (primeros 30 días)</div>
+            <p class="invest-item-desc">Mobile, hero, testimonios, CTAs. Trabajo directo en Elementor. Sin costo adicional.</p>
+          </div>
+        </div>
+        <div class="invest-item">
+          <div class="invest-check">✓</div>
+          <div>
+            <div class="invest-item-title">Reporte mensual de KPIs</div>
+            <p class="invest-item-desc">Dashboard con los indicadores que importan para ajustar la estrategia cada mes.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ═══════════ 09. PRÓXIMOS PASOS ═══════════ -->
+<section>
+  <div class="section-wrap">
+    <span class="section-label">09 — Próximos pasos</span>
+    <h2 class="section-h2">De la propuesta<br><em>al arranque.</em></h2>
+    <p class="section-lead">
+      Cuatro pasos simples. El proceso de onboarding está diseñado para que VM Group 
+      vea los primeros entregables en la primera semana.
+    </p>
+
+    <div class="steps-grid">
+      <div class="step">
+        <div class="step-n">01</div>
+        <div class="step-title">Reunión de alineación</div>
+        <p class="step-desc">30 minutos. Revisamos el canal juntos, confirmamos prioridades del mes 1, y acordamos el proceso de aprobación. Pedimos acceso de lectura a sus Insights de IG y Google Analytics web.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">02</div>
+        <div class="step-title">Onboarding analítico</div>
+        <p class="step-desc">Con los Insights en mano, analizamos los top 5 vs. bottom 5 posts. Establecemos los KPIs base de mes 0. Esto asegura que la estrategia parte de datos reales, no de suposiciones.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">03</div>
+        <div class="step-title">Entrega semana 1</div>
+        <p class="step-desc">Calendario del primer mes, copies del primer bloque, guiones de los primeros 2 Reels de Vanessa, y plan de mejoras web con cronograma. VM Group empieza a publicar con sistema.</p>
+      </div>
+      <div class="step">
+        <div class="step-n">04</div>
+        <div class="step-title">Revisión mes 1</div>
+        <p class="step-desc">Al cierre del primer mes revisamos los datos juntos. Si los resultados lo justifican, continuamos y escalamos. Si hay ajustes, los hacemos. La estrategia evoluciona con la cuenta.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ CLOSER ═══════════ -->
+<div class="closer">
+  <div class="closer-kicker">Victoria Teams × VM Group USA · 2026</div>
+  <h2 class="closer-h2">
+    El conocimiento<br>
+    ya existe.<br>
+    <em>Démosle el sistema</em><br>
+    que se merece.
+  </h2>
+  <p class="closer-sub">
+    VM Group no necesita crear nada nuevo. Necesita un sistema que convierta 
+    lo que Vanessa y su equipo ya saben en contenido que la gente quiera 
+    seguir, guardar, compartir y — eventualmente — pagar por sus servicios.
+  </p>
+  <div class="closer-meta">
+    <div>
+      <div class="cm-label">Presentado por</div>
+      <div class="cm-value">Victoria Teams</div>
+    </div>
+    <div>
+      <div class="cm-label">Para</div>
+      <div class="cm-value">Vanessa Márquez, VM Group USA</div>
+    </div>
+    <div>
+      <div class="cm-label">Inversión</div>
+      <div class="cm-value">USD 1,500 / mes</div>
+    </div>
+  </div>
+</div>
+
+<!-- CHARTS JS -->
+<script>
+  Chart.defaults.font.family = "'DM Sans', sans-serif";
+  Chart.defaults.font.size = 11;
+  Chart.defaults.color = '#7C766E';
+
+  const gold = '#B8944A';
+  const goldPale = '#E8D4A0';
+  const navy = '#1C2E45';
+  const muted = '#D4CEC6';
+  const sage = '#3A5440';
+
+  // 1. Mix Chart
+  new Chart(document.getElementById('mixChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Reels', 'Carruseles', 'Imágenes', 'Stories'],
+      datasets: [
+        { label: 'VM Group hoy', data: [30, 38, 20, 12], backgroundColor: muted, borderRadius: 2 },
+        { label: 'Recomendado 2026', data: [65, 25, 5, 5], backgroundColor: gold, borderRadius: 2 }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, padding: 14 } } },
+      scales: {
+        x: { grid: { display: false }, border: { display: false } },
+        y: { grid: { color: 'rgba(10,10,10,0.05)' }, border: { display: false }, ticks: { callback: v => v + '%' }, max: 80 }
+      }
+    }
+  });
+
+  // 2. Engagement Chart
+  new Chart(document.getElementById('engChart'), {
+    type: 'bar',
+    data: {
+      labels: ['VM Group\nestimado', 'Promedio legal\nprofesional', 'Meta\nQ1 con VT', 'Nano-influencer\nreferencia'],
+      datasets: [{
+        data: [0.9, 1.7, 2.5, 5.2],
+        backgroundColor: [muted, goldPale, gold, navy],
+        borderRadius: 2
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: 'rgba(10,10,10,0.05)' }, border: { display: false }, ticks: { callback: v => v + '%' }, max: 6 },
+        y: { grid: { display: false }, border: { display: false } }
+      }
+    }
+  });
+
+  // 3. Growth Chart
+  new Chart(document.getElementById('growthChart'), {
+    type: 'line',
+    data: {
+      labels: ['Hoy', 'Mes 1', 'Mes 2', 'Mes 3', 'Mes 4', 'Mes 5', 'Mes 6'],
+      datasets: [
+        {
+          label: 'Sin estrategia', data: [100, 101, 102, 103, 103, 104, 105],
+          borderColor: muted, borderDash: [4, 4], backgroundColor: 'transparent', tension: 0.4, pointRadius: 2
+        },
+        {
+          label: 'Con sistema VT', data: [100, 104, 109, 115, 122, 131, 142],
+          borderColor: gold, backgroundColor: 'rgba(184,148,74,0.07)', fill: true, tension: 0.4,
+          pointRadius: 4, pointBackgroundColor: gold
+        }
+      ]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { position: 'bottom', labels: { boxWidth: 10, padding: 14 } } },
+      scales: {
+        x: { grid: { display: false }, border: { display: false } },
+        y: { grid: { color: 'rgba(10,10,10,0.05)' }, border: { display: false }, ticks: { callback: v => v + '%' } }
+      }
+    }
+  });
+
+  // 4. Pillar Donut
+  new Chart(document.getElementById('pillarChart'), {
+    type: 'doughnut',
+    data: {
+      labels: ['Educación Migratoria', 'Verdad vs Mito', 'Casos Reales', 'Negocio en USA', 'Contexto Actual', 'VM por Dentro'],
+      datasets: [{
+        data: [35, 20, 20, 10, 10, 5],
+        backgroundColor: [navy, gold, sage, goldPale, '#5C3A1A', muted],
+        borderWidth: 0, hoverOffset: 6
+      }]
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false, cutout: '64%',
+      plugins: {
+        legend: { position: 'right', labels: { boxWidth: 9, padding: 10, font: { size: 10 } } }
+      }
+    }
+  });
+</script>
+
+</body>
+</html>
